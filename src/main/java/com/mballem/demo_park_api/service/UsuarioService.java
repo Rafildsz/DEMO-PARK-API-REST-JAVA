@@ -1,5 +1,7 @@
 package com.mballem.demo_park_api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.mballem.demo_park_api.entity.Usuario;
@@ -24,5 +26,17 @@ public class UsuarioService {
         return usuarioRepository.findById(id).orElseThrow(
             () -> new RuntimeException("Usuario nao encontrado")
         );
+    }
+
+    @Transactional
+    public Usuario editarSenha(Long id, String password) {
+        Usuario user = buscarPorId(id);
+        user.setPassword(password);
+        return user;
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Usuario> buscarTodos() {
+        return usuarioRepository.findAll();
     }
 }
